@@ -1,0 +1,4 @@
+{
+  "threshold": 35,
+  "ignore": "app.js"
+}
