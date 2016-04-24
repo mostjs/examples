@@ -23,25 +23,13 @@ const draggable = document.querySelector('.draggable')
 // a stream of 1 GRAB followed by DRAGs (ie mousemoves).
 const makeDraggable = (area, draggable) => {
   const drag = mousedown(draggable)
-    .map(e => {
-      // On Firefox, avoid the dragging to select text
-      e.preventDefault()
-
-      // Memorize click position within the box
-      const dragOffset = {
-        dx: e.clientX - draggable.offsetLeft,
-        dy: e.clientY - draggable.offsetTop
-      }
-
-      return mousemove(area)
-        .map(e => eventToDragInfo(DRAG, draggable, e, dragOffset))
-        .startWith(eventToDragInfo(GRAB, draggable, e))
-    })
+    .tap(preventDefault) // On Firefox, avoid the dragging to select text
+    .map(beginDrag(area, draggable))
 
   // A mouseup DOM event generates a stream event which is a
   // stream containing a DROP.
   const drop = mouseup(area)
-    .map(e => just(eventToDragInfo(DROP, draggable, e)))
+    .map(endDrag(draggable))
 
   // Merge the drag and drop streams.
   // Then use switch() to ensure that the resulting stream behaves
@@ -52,6 +40,23 @@ const makeDraggable = (area, draggable) => {
   // dropped behavior.
   return merge(drag, drop).switch()
 }
+
+const preventDefault = e => e.preventDefault()
+
+const beginDrag = (area, draggable) => e => {
+  // Memorize click position within the box
+  const dragOffset = {
+    dx: e.clientX - draggable.offsetLeft,
+    dy: e.clientY - draggable.offsetTop
+  }
+
+  return mousemove(area)
+    .map(e => eventToDragInfo(DRAG, draggable, e, dragOffset))
+    .startWith(eventToDragInfo(GRAB, draggable, e))
+}
+
+const endDrag = draggable => e =>
+  just(eventToDragInfo(DROP, draggable, e))
 
 // dragOffset is undefined and unused for actions other than DRAG.
 const eventToDragInfo = (action, target, e, dragOffset) =>

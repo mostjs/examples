@@ -28,26 +28,12 @@ var draggable = document.querySelector('.draggable');
 // A mousedown DOM event generates a stream event which is
 // a stream of 1 GRAB followed by DRAGs (ie mousemoves).
 var makeDraggable = function makeDraggable(area, draggable) {
-  var drag = (0, _domEvent.mousedown)(draggable).map(function (e) {
-    // On Firefox, avoid the dragging to select text
-    e.preventDefault();
-
-    // Memorize click position within the box
-    var dragOffset = {
-      dx: e.clientX - draggable.offsetLeft,
-      dy: e.clientY - draggable.offsetTop
-    };
-
-    return (0, _domEvent.mousemove)(area).map(function (e) {
-      return eventToDragInfo(DRAG, draggable, e, dragOffset);
-    }).startWith(eventToDragInfo(GRAB, draggable, e));
-  });
+  var drag = (0, _domEvent.mousedown)(draggable).tap(preventDefault) // On Firefox, avoid the dragging to select text
+  .map(beginDrag(area, draggable));
 
   // A mouseup DOM event generates a stream event which is a
   // stream containing a DROP.
-  var drop = (0, _domEvent.mouseup)(area).map(function (e) {
-    return (0, _most.just)(eventToDragInfo(DROP, draggable, e));
-  });
+  var drop = (0, _domEvent.mouseup)(area).map(endDrag(draggable));
 
   // Merge the drag and drop streams.
   // Then use switch() to ensure that the resulting stream behaves
@@ -57,6 +43,30 @@ var makeDraggable = function makeDraggable(area, draggable) {
   // This effectively *toggles behavior* between dragging behavior and
   // dropped behavior.
   return (0, _most.merge)(drag, drop).switch();
+};
+
+var preventDefault = function preventDefault(e) {
+  return e.preventDefault();
+};
+
+var beginDrag = function beginDrag(area, draggable) {
+  return function (e) {
+    // Memorize click position within the box
+    var dragOffset = {
+      dx: e.clientX - draggable.offsetLeft,
+      dy: e.clientY - draggable.offsetTop
+    };
+
+    return (0, _domEvent.mousemove)(area).map(function (e) {
+      return eventToDragInfo(DRAG, draggable, e, dragOffset);
+    }).startWith(eventToDragInfo(GRAB, draggable, e));
+  };
+};
+
+var endDrag = function endDrag(draggable) {
+  return function (e) {
+    return (0, _most.just)(eventToDragInfo(DROP, draggable, e));
+  };
 };
 
 // dragOffset is undefined and unused for actions other than DRAG.
