@@ -5,6 +5,7 @@
   "description": "examples",
   "scripts": {
     "build:add-inputs": "browserify add-inputs/index.js -t babelify --outfile add-inputs/app.js",
+    "build:drag-n-drop": "browserify drag-n-drop/index.js -t babelify --outfile drag-n-drop/app.js",
     "lint": "jsinspect . && eslint ."
   },
   "repository": {
