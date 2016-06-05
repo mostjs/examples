@@ -6,6 +6,7 @@
   "scripts": {
     "build:add-inputs": "browserify add-inputs/index.js -t babelify --outfile add-inputs/app.js",
     "build:drag-n-drop": "browserify drag-n-drop/index.js -t babelify --outfile drag-n-drop/app.js",
+    "build:mouse-position": "browserify mouse-position/index.js -t babelify --outfile mouse-position/app.js",
     "lint": "jsinspect . && eslint ."
   },
   "repository": {
