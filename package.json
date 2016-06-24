@@ -7,6 +7,7 @@
     "build:add-inputs": "browserify add-inputs/index.js -t babelify --outfile add-inputs/app.js",
     "build:drag-n-drop": "browserify drag-n-drop/index.js -t babelify --outfile drag-n-drop/app.js",
     "build:mouse-position": "browserify mouse-position/index.js -t babelify --outfile mouse-position/app.js",
+    "build:type-to-search": "browserify type-to-search/index.js -t babelify --outfile type-to-search/app.js",
     "lint": "jsinspect . && eslint ."
   },
   "repository": {
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "@most/dom-event": "^1.1.0",
-    "most": "^0.18.8"
+    "most": "^0.19.7",
+    "rest": "^2.0.0"
   }
 }
