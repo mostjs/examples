@@ -4648,7 +4648,7 @@ exports.periodic = periodic;
 /**
  * Create a stream that emits the current time periodically
  * @param {Number} period periodicity of events in millis
- * @param {*) value value to emit each period
+ * @param {*} value value to emit each period
  * @returns {Stream} new stream that emits the current time every period
  */
 function periodic(period, value) {
