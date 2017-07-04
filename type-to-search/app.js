@@ -1,786 +1,669 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global, factory) {
-    if (typeof define === "function" && define.amd) {
-        define('@most/dom-event', ['exports', 'most'], factory);
-    } else if (typeof exports !== "undefined") {
-        factory(exports, require('most'));
-    } else {
-        var mod = {
-            exports: {}
-        };
-        factory(mod.exports, global.most);
-        global.mostDomEvent = mod.exports;
-    }
-})(this, function (exports, _most) {
-    'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('most')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'most'], factory) :
+  (factory((global.mostDomEvent = global.mostDomEvent || {}),global.most));
+}(this, (function (exports,most) { 'use strict';
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.touchcancel = exports.touchmove = exports.touchend = exports.touchstart = exports.pointerleave = exports.pointerout = exports.pointerenter = exports.pointerover = exports.pointermove = exports.pointerup = exports.pointerdown = exports.unload = exports.load = exports.popstate = exports.hashchange = exports.error = exports.scroll = exports.resize = exports.contextmenu = exports.input = exports.keyup = exports.keypress = exports.keydown = exports.submit = exports.select = exports.change = exports.mouseleave = exports.mouseout = exports.mouseenter = exports.mouseover = exports.mousemove = exports.mouseup = exports.mousedown = exports.dblclick = exports.click = exports.focusout = exports.focusin = exports.focus = exports.blur = exports.domEvent = undefined;
+/** @license MIT License (c) copyright 2015-2016 original author or authors */
+/** @author Brian Cavalier */
+// domEvent :: (EventTarget t, Event e) => String -> t -> boolean=false -> Stream e
+var domEvent = function (event, node, capture) {
+    if ( capture === void 0 ) capture = false;
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
+    return new most.Stream(new DomEvent(event, node, capture));
+};
 
-    var _createClass = function () {
-        function defineProperties(target, props) {
-            for (var i = 0; i < props.length; i++) {
-                var descriptor = props[i];
-                descriptor.enumerable = descriptor.enumerable || false;
-                descriptor.configurable = true;
-                if ("value" in descriptor) descriptor.writable = true;
-                Object.defineProperty(target, descriptor.key, descriptor);
-            }
-        }
+var blur = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-        return function (Constructor, protoProps, staticProps) {
-            if (protoProps) defineProperties(Constructor.prototype, protoProps);
-            if (staticProps) defineProperties(Constructor, staticProps);
-            return Constructor;
-        };
-    }();
+  return domEvent('blur', node, capture);
+};
+var focus = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var domEvent = function domEvent(event, node) {
-        var capture = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-        return new _most.Stream(new DomEvent(event, node, capture));
-    };
+  return domEvent('focus', node, capture);
+};
+var focusin = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var blur = function blur(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('blur', node, capture);
-    };
+  return domEvent('focusin', node, capture);
+};
+var focusout = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var focus = function focus(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('focus', node, capture);
-    };
+  return domEvent('focusout', node, capture);
+};
+var click = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var focusin = function focusin(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('focusin', node, capture);
-    };
+  return domEvent('click', node, capture);
+};
+var dblclick = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var focusout = function focusout(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('focusout', node, capture);
-    };
+  return domEvent('dblclick', node, capture);
+};
+var mousedown = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var click = function click(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('click', node, capture);
-    };
+  return domEvent('mousedown', node, capture);
+};
+var mouseup = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var dblclick = function dblclick(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('dblclick', node, capture);
-    };
+  return domEvent('mouseup', node, capture);
+};
+var mousemove = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mousedown = function mousedown(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mousedown', node, capture);
-    };
+  return domEvent('mousemove', node, capture);
+};
+var mouseover = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mouseup = function mouseup(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mouseup', node, capture);
-    };
+  return domEvent('mouseover', node, capture);
+};
+var mouseenter = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mousemove = function mousemove(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mousemove', node, capture);
-    };
+  return domEvent('mouseenter', node, capture);
+};
+var mouseout = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mouseover = function mouseover(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mouseover', node, capture);
-    };
+  return domEvent('mouseout', node, capture);
+};
+var mouseleave = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mouseenter = function mouseenter(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mouseenter', node, capture);
-    };
+  return domEvent('mouseleave', node, capture);
+};
+var change = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mouseout = function mouseout(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mouseout', node, capture);
-    };
+  return domEvent('change', node, capture);
+};
+var select = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var mouseleave = function mouseleave(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('mouseleave', node, capture);
-    };
+  return domEvent('select', node, capture);
+};
+var submit = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var change = function change(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('change', node, capture);
-    };
+  return domEvent('submit', node, capture);
+};
+var keydown = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var select = function select(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('select', node, capture);
-    };
+  return domEvent('keydown', node, capture);
+};
+var keypress = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var submit = function submit(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('submit', node, capture);
-    };
+  return domEvent('keypress', node, capture);
+};
+var keyup = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var keydown = function keydown(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('keydown', node, capture);
-    };
+  return domEvent('keyup', node, capture);
+};
+var input = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var keypress = function keypress(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('keypress', node, capture);
-    };
+  return domEvent('input', node, capture);
+};
+var contextmenu = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var keyup = function keyup(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('keyup', node, capture);
-    };
+  return domEvent('contextmenu', node, capture);
+};
+var resize = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var input = function input(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('input', node, capture);
-    };
+  return domEvent('resize', node, capture);
+};
+var scroll = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var contextmenu = function contextmenu(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('contextmenu', node, capture);
-    };
+  return domEvent('scroll', node, capture);
+};
+var error = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var resize = function resize(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('resize', node, capture);
-    };
+  return domEvent('error', node, capture);
+};
 
-    var scroll = function scroll(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('scroll', node, capture);
-    };
+var hashchange = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var error = function error(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('error', node, capture);
-    };
+  return domEvent('hashchange', node, capture);
+};
+var popstate = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var hashchange = function hashchange(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('hashchange', node, capture);
-    };
+  return domEvent('popstate', node, capture);
+};
+var load = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var popstate = function popstate(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('popstate', node, capture);
-    };
+  return domEvent('load', node, capture);
+};
+var unload = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var load = function load(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('load', node, capture);
-    };
+  return domEvent('unload', node, capture);
+};
 
-    var unload = function unload(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('unload', node, capture);
-    };
+var pointerdown = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointerdown = function pointerdown(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointerdown', node, capture);
-    };
+  return domEvent('pointerdown', node, capture);
+};
+var pointerup = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointerup = function pointerup(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointerup', node, capture);
-    };
+  return domEvent('pointerup', node, capture);
+};
+var pointermove = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointermove = function pointermove(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointermove', node, capture);
-    };
+  return domEvent('pointermove', node, capture);
+};
+var pointerover = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointerover = function pointerover(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointerover', node, capture);
-    };
+  return domEvent('pointerover', node, capture);
+};
+var pointerenter = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointerenter = function pointerenter(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointerenter', node, capture);
-    };
+  return domEvent('pointerenter', node, capture);
+};
+var pointerout = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointerout = function pointerout(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointerout', node, capture);
-    };
+  return domEvent('pointerout', node, capture);
+};
+var pointerleave = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var pointerleave = function pointerleave(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('pointerleave', node, capture);
-    };
+  return domEvent('pointerleave', node, capture);
+};
 
-    var touchstart = function touchstart(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('touchstart', node, capture);
-    };
+var touchstart = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var touchend = function touchend(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('touchend', node, capture);
-    };
+  return domEvent('touchstart', node, capture);
+};
+var touchend = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var touchmove = function touchmove(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('touchmove', node, capture);
-    };
+  return domEvent('touchend', node, capture);
+};
+var touchmove = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var touchcancel = function touchcancel(node) {
-        var capture = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-        return domEvent('touchcancel', node, capture);
-    };
+  return domEvent('touchmove', node, capture);
+};
+var touchcancel = function (node, capture) {
+  if ( capture === void 0 ) capture = false;
 
-    var DomEvent = function () {
-        function DomEvent(event, node, capture) {
-            _classCallCheck(this, DomEvent);
+  return domEvent('touchcancel', node, capture);
+};
 
-            this.event = event;
-            this.node = node;
-            this.capture = capture;
-        }
+var DomEvent = function DomEvent (event, node, capture) {
+  this.event = event;
+  this.node = node;
+  this.capture = capture;
+};
 
-        _createClass(DomEvent, [{
-            key: 'run',
-            value: function run(sink, scheduler) {
-                var _this = this;
+DomEvent.prototype.run = function run (sink, scheduler) {
+    var this$1 = this;
 
-                var send = function send(e) {
-                    return tryEvent(scheduler.now(), e, sink);
-                };
+  var send = function (e) { return tryEvent(scheduler.now(), e, sink); };
+  var dispose = function () { return this$1.node.removeEventListener(this$1.event, send, this$1.capture); };
 
-                var dispose = function dispose() {
-                    return _this.node.removeEventListener(_this.event, send, _this.capture);
-                };
+  this.node.addEventListener(this.event, send, this.capture);
 
-                this.node.addEventListener(this.event, send, this.capture);
-                return {
-                    dispose: dispose
-                };
-            }
-        }]);
+  return { dispose: dispose }
+};
 
-        return DomEvent;
-    }();
+function tryEvent (t, x, sink) {
+  try {
+    sink.event(t, x);
+  } catch (e) {
+    sink.error(t, e);
+  }
+}
 
-    function tryEvent(t, x, sink) {
-        try {
-            sink.event(t, x);
-        } catch (e) {
-            sink.error(t, e);
-        }
-    }
+exports.domEvent = domEvent;
+exports.blur = blur;
+exports.focus = focus;
+exports.focusin = focusin;
+exports.focusout = focusout;
+exports.click = click;
+exports.dblclick = dblclick;
+exports.mousedown = mousedown;
+exports.mouseup = mouseup;
+exports.mousemove = mousemove;
+exports.mouseover = mouseover;
+exports.mouseenter = mouseenter;
+exports.mouseout = mouseout;
+exports.mouseleave = mouseleave;
+exports.change = change;
+exports.select = select;
+exports.submit = submit;
+exports.keydown = keydown;
+exports.keypress = keypress;
+exports.keyup = keyup;
+exports.input = input;
+exports.contextmenu = contextmenu;
+exports.resize = resize;
+exports.scroll = scroll;
+exports.error = error;
+exports.hashchange = hashchange;
+exports.popstate = popstate;
+exports.load = load;
+exports.unload = unload;
+exports.pointerdown = pointerdown;
+exports.pointerup = pointerup;
+exports.pointermove = pointermove;
+exports.pointerover = pointerover;
+exports.pointerenter = pointerenter;
+exports.pointerout = pointerout;
+exports.pointerleave = pointerleave;
+exports.touchstart = touchstart;
+exports.touchend = touchend;
+exports.touchmove = touchmove;
+exports.touchcancel = touchcancel;
 
-    exports.domEvent = domEvent;
-    exports.blur = blur;
-    exports.focus = focus;
-    exports.focusin = focusin;
-    exports.focusout = focusout;
-    exports.click = click;
-    exports.dblclick = dblclick;
-    exports.mousedown = mousedown;
-    exports.mouseup = mouseup;
-    exports.mousemove = mousemove;
-    exports.mouseover = mouseover;
-    exports.mouseenter = mouseenter;
-    exports.mouseout = mouseout;
-    exports.mouseleave = mouseleave;
-    exports.change = change;
-    exports.select = select;
-    exports.submit = submit;
-    exports.keydown = keydown;
-    exports.keypress = keypress;
-    exports.keyup = keyup;
-    exports.input = input;
-    exports.contextmenu = contextmenu;
-    exports.resize = resize;
-    exports.scroll = scroll;
-    exports.error = error;
-    exports.hashchange = hashchange;
-    exports.popstate = popstate;
-    exports.load = load;
-    exports.unload = unload;
-    exports.pointerdown = pointerdown;
-    exports.pointerup = pointerup;
-    exports.pointermove = pointermove;
-    exports.pointerover = pointerover;
-    exports.pointerenter = pointerenter;
-    exports.pointerout = pointerout;
-    exports.pointerleave = pointerleave;
-    exports.touchstart = touchstart;
-    exports.touchend = touchend;
-    exports.touchmove = touchmove;
-    exports.touchcancel = touchcancel;
-});
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
 
 },{"most":69}],2:[function(require,module,exports){
 (function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define('@most/multicast', ['exports', '@most/prelude'], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require('@most/prelude'));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.prelude);
-    global.mostMulticast = mod.exports;
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@most/prelude')) :
+  typeof define === 'function' && define.amd ? define(['exports', '@most/prelude'], factory) :
+  (factory((global.mostMulticast = global.mostMulticast || {}),global.mostPrelude));
+}(this, (function (exports,_most_prelude) { 'use strict';
+
+var MulticastDisposable = function MulticastDisposable (source, sink) {
+  this.source = source
+  this.sink = sink
+  this.disposed = false
+};
+
+MulticastDisposable.prototype.dispose = function dispose () {
+  if (this.disposed) {
+    return
   }
-})(this, function (exports, _prelude) {
-  'use strict';
+  this.disposed = true
+  var remaining = this.source.remove(this.sink)
+  return remaining === 0 && this.source._dispose()
+};
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.MulticastSource = undefined;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
+function tryEvent (t, x, sink) {
+  try {
+    sink.event(t, x)
+  } catch (e) {
+    sink.error(t, e)
   }
+}
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  var MulticastDisposable = function () {
-    function MulticastDisposable(source, sink) {
-      _classCallCheck(this, MulticastDisposable);
-
-      this.source = source;
-      this.sink = sink;
-      this.disposed = false;
-    }
-
-    _createClass(MulticastDisposable, [{
-      key: 'dispose',
-      value: function dispose() {
-        if (this.disposed) {
-          return;
-        }
-        this.disposed = true;
-        var remaining = this.source.remove(this.sink);
-        return remaining === 0 && this.source._dispose();
-      }
-    }]);
-
-    return MulticastDisposable;
-  }();
-
-  function tryEvent(t, x, sink) {
-    try {
-      sink.event(t, x);
-    } catch (e) {
-      sink.error(t, e);
-    }
+function tryEnd (t, x, sink) {
+  try {
+    sink.end(t, x)
+  } catch (e) {
+    sink.error(t, e)
   }
+}
 
-  function tryEnd(t, x, sink) {
-    try {
-      sink.end(t, x);
-    } catch (e) {
-      sink.error(t, e);
-    }
+var dispose = function (disposable) { return disposable.dispose(); }
+
+var emptyDisposable = {
+  dispose: function dispose$1 () {}
+}
+
+var MulticastSource = function MulticastSource (source) {
+  this.source = source
+  this.sinks = []
+  this._disposable = emptyDisposable
+};
+
+MulticastSource.prototype.run = function run (sink, scheduler) {
+  var n = this.add(sink)
+  if (n === 1) {
+    this._disposable = this.source.run(this, scheduler)
+  }
+  return new MulticastDisposable(this, sink)
+};
+
+MulticastSource.prototype._dispose = function _dispose () {
+  var disposable = this._disposable
+  this._disposable = emptyDisposable
+  return Promise.resolve(disposable).then(dispose)
+};
+
+MulticastSource.prototype.add = function add (sink) {
+  this.sinks = _most_prelude.append(sink, this.sinks)
+  return this.sinks.length
+};
+
+MulticastSource.prototype.remove = function remove$1 (sink) {
+  var i = _most_prelude.findIndex(sink, this.sinks)
+  // istanbul ignore next
+  if (i >= 0) {
+    this.sinks = _most_prelude.remove(i, this.sinks)
   }
 
-  var dispose = function dispose(disposable) {
-    return disposable.dispose();
-  };
+  return this.sinks.length
+};
 
-  var emptyDisposable = {
-    dispose: function dispose() {}
-  };
-
-  var MulticastSource = function () {
-    function MulticastSource(source) {
-      _classCallCheck(this, MulticastSource);
-
-      this.source = source;
-      this.sinks = [];
-      this._disposable = emptyDisposable;
-    }
-
-    _createClass(MulticastSource, [{
-      key: 'run',
-      value: function run(sink, scheduler) {
-        var n = this.add(sink);
-        if (n === 1) {
-          this._disposable = this.source.run(this, scheduler);
-        }
-        return new MulticastDisposable(this, sink);
-      }
-    }, {
-      key: '_dispose',
-      value: function _dispose() {
-        var disposable = this._disposable;
-        this._disposable = emptyDisposable;
-        return Promise.resolve(disposable).then(dispose);
-      }
-    }, {
-      key: 'add',
-      value: function add(sink) {
-        this.sinks = (0, _prelude.append)(sink, this.sinks);
-        return this.sinks.length;
-      }
-    }, {
-      key: 'remove',
-      value: function remove(sink) {
-        var i = (0, _prelude.findIndex)(sink, this.sinks);
-        // istanbul ignore next
-        if (i >= 0) {
-          this.sinks = (0, _prelude.remove)(i, this.sinks);
-        }
-
-        return this.sinks.length;
-      }
-    }, {
-      key: 'event',
-      value: function event(time, value) {
-        var s = this.sinks;
-        if (s.length === 1) {
-          return s[0].event(time, value);
-        }
-        for (var i = 0; i < s.length; ++i) {
-          tryEvent(time, value, s[i]);
-        }
-      }
-    }, {
-      key: 'end',
-      value: function end(time, value) {
-        var s = this.sinks;
-        for (var i = 0; i < s.length; ++i) {
-          tryEnd(time, value, s[i]);
-        }
-      }
-    }, {
-      key: 'error',
-      value: function error(time, err) {
-        var s = this.sinks;
-        for (var i = 0; i < s.length; ++i) {
-          s[i].error(time, err);
-        }
-      }
-    }]);
-
-    return MulticastSource;
-  }();
-
-  function multicast(stream) {
-    var source = stream.source;
-    return source instanceof MulticastSource ? stream : new stream.constructor(new MulticastSource(source));
+MulticastSource.prototype.event = function event (time, value) {
+  var s = this.sinks
+  if (s.length === 1) {
+    return s[0].event(time, value)
   }
+  for (var i = 0; i < s.length; ++i) {
+    tryEvent(time, value, s[i])
+  }
+};
 
-  exports.MulticastSource = MulticastSource;
-  exports.default = multicast;
-});
+MulticastSource.prototype.end = function end (time, value) {
+  var s = this.sinks
+  for (var i = 0; i < s.length; ++i) {
+    tryEnd(time, value, s[i])
+  }
+};
+
+MulticastSource.prototype.error = function error (time, err) {
+  var s = this.sinks
+  for (var i = 0; i < s.length; ++i) {
+    s[i].error(time, err)
+  }
+};
+
+function multicast (stream) {
+  var source = stream.source
+  return source instanceof MulticastSource
+    ? stream
+    : new stream.constructor(new MulticastSource(source))
+}
+
+exports['default'] = multicast;
+exports.MulticastSource = MulticastSource;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
 
 },{"@most/prelude":3}],3:[function(require,module,exports){
 (function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define('@most/prelude', ['exports'], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports);
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports);
-    global.mostPrelude = mod.exports;
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.mostPrelude = global.mostPrelude || {})));
+}(this, (function (exports) { 'use strict';
+
+/** @license MIT License (c) copyright 2010-2016 original author or authors */
+
+// Non-mutating array operations
+
+// cons :: a -> [a] -> [a]
+// a with x prepended
+function cons (x, a) {
+  var l = a.length;
+  var b = new Array(l + 1);
+  b[0] = x;
+  for (var i = 0; i < l; ++i) {
+    b[i + 1] = a[i];
   }
-})(this, function (exports) {
-  'use strict';
+  return b
+}
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  /** @license MIT License (c) copyright 2010-2016 original author or authors */
-
-  // Non-mutating array operations
-
-  // cons :: a -> [a] -> [a]
-  // a with x prepended
-  function cons(x, a) {
-    var l = a.length;
-    var b = new Array(l + 1);
-    b[0] = x;
-    for (var i = 0; i < l; ++i) {
-      b[i + 1] = a[i];
-    }
-    return b;
+// append :: a -> [a] -> [a]
+// a with x appended
+function append (x, a) {
+  var l = a.length;
+  var b = new Array(l + 1);
+  for (var i = 0; i < l; ++i) {
+    b[i] = a[i];
   }
 
-  // append :: a -> [a] -> [a]
-  // a with x appended
-  function append(x, a) {
-    var l = a.length;
-    var b = new Array(l + 1);
-    for (var i = 0; i < l; ++i) {
-      b[i] = a[i];
-    }
+  b[l] = x;
+  return b
+}
 
-    b[l] = x;
-    return b;
+// drop :: Int -> [a] -> [a]
+// drop first n elements
+function drop (n, a) { // eslint-disable-line complexity
+  if (n < 0) {
+    throw new TypeError('n must be >= 0')
   }
 
-  // drop :: Int -> [a] -> [a]
-  // drop first n elements
-  function drop(n, a) {
-    // eslint-disable-line complexity
-    if (n < 0) {
-      throw new TypeError('n must be >= 0');
-    }
-
-    var l = a.length;
-    if (n === 0 || l === 0) {
-      return a;
-    }
-
-    if (n >= l) {
-      return [];
-    }
-
-    return unsafeDrop(n, a, l - n);
+  var l = a.length;
+  if (n === 0 || l === 0) {
+    return a
   }
 
-  // unsafeDrop :: Int -> [a] -> Int -> [a]
-  // Internal helper for drop
-  function unsafeDrop(n, a, l) {
-    var b = new Array(l);
-    for (var i = 0; i < l; ++i) {
-      b[i] = a[n + i];
-    }
-    return b;
+  if (n >= l) {
+    return []
   }
 
-  // tail :: [a] -> [a]
-  // drop head element
-  function tail(a) {
-    return drop(1, a);
+  return unsafeDrop(n, a, l - n)
+}
+
+// unsafeDrop :: Int -> [a] -> Int -> [a]
+// Internal helper for drop
+function unsafeDrop (n, a, l) {
+  var b = new Array(l);
+  for (var i = 0; i < l; ++i) {
+    b[i] = a[n + i];
+  }
+  return b
+}
+
+// tail :: [a] -> [a]
+// drop head element
+function tail (a) {
+  return drop(1, a)
+}
+
+// copy :: [a] -> [a]
+// duplicate a (shallow duplication)
+function copy (a) {
+  var l = a.length;
+  var b = new Array(l);
+  for (var i = 0; i < l; ++i) {
+    b[i] = a[i];
+  }
+  return b
+}
+
+// map :: (a -> b) -> [a] -> [b]
+// transform each element with f
+function map (f, a) {
+  var l = a.length;
+  var b = new Array(l);
+  for (var i = 0; i < l; ++i) {
+    b[i] = f(a[i]);
+  }
+  return b
+}
+
+// reduce :: (a -> b -> a) -> a -> [b] -> a
+// accumulate via left-fold
+function reduce (f, z, a) {
+  var r = z;
+  for (var i = 0, l = a.length; i < l; ++i) {
+    r = f(r, a[i], i);
+  }
+  return r
+}
+
+// replace :: a -> Int -> [a]
+// replace element at index
+function replace (x, i, a) { // eslint-disable-line complexity
+  if (i < 0) {
+    throw new TypeError('i must be >= 0')
   }
 
-  // copy :: [a] -> [a]
-  // duplicate a (shallow duplication)
-  function copy(a) {
-    var l = a.length;
-    var b = new Array(l);
-    for (var i = 0; i < l; ++i) {
-      b[i] = a[i];
-    }
-    return b;
+  var l = a.length;
+  var b = new Array(l);
+  for (var j = 0; j < l; ++j) {
+    b[j] = i === j ? x : a[j];
+  }
+  return b
+}
+
+// remove :: Int -> [a] -> [a]
+// remove element at index
+function remove (i, a) {  // eslint-disable-line complexity
+  if (i < 0) {
+    throw new TypeError('i must be >= 0')
   }
 
-  // map :: (a -> b) -> [a] -> [b]
-  // transform each element with f
-  function map(f, a) {
-    var l = a.length;
-    var b = new Array(l);
-    for (var i = 0; i < l; ++i) {
-      b[i] = f(a[i]);
-    }
-    return b;
+  var l = a.length;
+  if (l === 0 || i >= l) { // exit early if index beyond end of array
+    return a
   }
 
-  // reduce :: (a -> b -> a) -> a -> [b] -> a
-  // accumulate via left-fold
-  function reduce(f, z, a) {
-    var r = z;
-    for (var i = 0, l = a.length; i < l; ++i) {
-      r = f(r, a[i], i);
-    }
-    return r;
+  if (l === 1) { // exit early if index in bounds and length === 1
+    return []
   }
 
-  // replace :: a -> Int -> [a]
-  // replace element at index
-  function replace(x, i, a) {
-    // eslint-disable-line complexity
-    if (i < 0) {
-      throw new TypeError('i must be >= 0');
-    }
+  return unsafeRemove(i, a, l - 1)
+}
 
-    var l = a.length;
-    var b = new Array(l);
-    for (var j = 0; j < l; ++j) {
-      b[j] = i === j ? x : a[j];
-    }
-    return b;
+// unsafeRemove :: Int -> [a] -> Int -> [a]
+// Internal helper to remove element at index
+function unsafeRemove (i, a, l) {
+  var b = new Array(l);
+  var j;
+  for (j = 0; j < i; ++j) {
+    b[j] = a[j];
+  }
+  for (j = i; j < l; ++j) {
+    b[j] = a[j + 1];
   }
 
-  // remove :: Int -> [a] -> [a]
-  // remove element at index
-  function remove(i, a) {
-    // eslint-disable-line complexity
-    if (i < 0) {
-      throw new TypeError('i must be >= 0');
-    }
+  return b
+}
 
-    var l = a.length;
-    if (l === 0 || i >= l) {
-      // exit early if index beyond end of array
-      return a;
+// removeAll :: (a -> boolean) -> [a] -> [a]
+// remove all elements matching a predicate
+function removeAll (f, a) {
+  var l = a.length;
+  var b = new Array(l);
+  var j = 0;
+  for (var x = (void 0), i = 0; i < l; ++i) {
+    x = a[i];
+    if (!f(x)) {
+      b[j] = x;
+      ++j;
     }
-
-    if (l === 1) {
-      // exit early if index in bounds and length === 1
-      return [];
-    }
-
-    return unsafeRemove(i, a, l - 1);
   }
 
-  // unsafeRemove :: Int -> [a] -> Int -> [a]
-  // Internal helper to remove element at index
-  function unsafeRemove(i, a, l) {
-    var b = new Array(l);
-    var j = void 0;
-    for (j = 0; j < i; ++j) {
-      b[j] = a[j];
+  b.length = j;
+  return b
+}
+
+// findIndex :: a -> [a] -> Int
+// find index of x in a, from the left
+function findIndex (x, a) {
+  for (var i = 0, l = a.length; i < l; ++i) {
+    if (x === a[i]) {
+      return i
     }
-    for (j = i; j < l; ++j) {
-      b[j] = a[j + 1];
+  }
+  return -1
+}
+
+// isArrayLike :: * -> boolean
+// Return true iff x is array-like
+function isArrayLike (x) {
+  return x != null && typeof x.length === 'number' && typeof x !== 'function'
+}
+
+/** @license MIT License (c) copyright 2010-2016 original author or authors */
+
+// id :: a -> a
+var id = function (x) { return x; };
+
+// compose :: (b -> c) -> (a -> b) -> (a -> c)
+var compose = function (f, g) { return function (x) { return f(g(x)); }; };
+
+// apply :: (a -> b) -> a -> b
+var apply = function (f, x) { return f(x); };
+
+// curry2 :: ((a, b) -> c) -> (a -> b -> c)
+function curry2 (f) {
+  function curried (a, b) {
+    switch (arguments.length) {
+      case 0: return curried
+      case 1: return function (b) { return f(a, b); }
+      default: return f(a, b)
     }
-
-    return b;
   }
+  return curried
+}
 
-  // removeAll :: (a -> boolean) -> [a] -> [a]
-  // remove all elements matching a predicate
-  function removeAll(f, a) {
-    var l = a.length;
-    var b = new Array(l);
-    var j = 0;
-    for (var x, i = 0; i < l; ++i) {
-      x = a[i];
-      if (!f(x)) {
-        b[j] = x;
-        ++j;
-      }
+// curry3 :: ((a, b, c) -> d) -> (a -> b -> c -> d)
+function curry3 (f) {
+  function curried (a, b, c) { // eslint-disable-line complexity
+    switch (arguments.length) {
+      case 0: return curried
+      case 1: return curry2(function (b, c) { return f(a, b, c); })
+      case 2: return function (c) { return f(a, b, c); }
+      default:return f(a, b, c)
     }
-
-    b.length = j;
-    return b;
   }
+  return curried
+}
 
-  // findIndex :: a -> [a] -> Int
-  // find index of x in a, from the left
-  function findIndex(x, a) {
-    for (var i = 0, l = a.length; i < l; ++i) {
-      if (x === a[i]) {
-        return i;
-      }
+// curry4 :: ((a, b, c, d) -> e) -> (a -> b -> c -> d -> e)
+function curry4 (f) {
+  function curried (a, b, c, d) { // eslint-disable-line complexity
+    switch (arguments.length) {
+      case 0: return curried
+      case 1: return curry3(function (b, c, d) { return f(a, b, c, d); })
+      case 2: return curry2(function (c, d) { return f(a, b, c, d); })
+      case 3: return function (d) { return f(a, b, c, d); }
+      default:return f(a, b, c, d)
     }
-    return -1;
   }
+  return curried
+}
 
-  // isArrayLike :: * -> boolean
-  // Return true iff x is array-like
-  function isArrayLike(x) {
-    return x != null && typeof x.length === 'number' && typeof x !== 'function';
-  }
+/** @license MIT License (c) copyright 2016 original author or authors */
 
-  /** @license MIT License (c) copyright 2010-2016 original author or authors */
+exports.cons = cons;
+exports.append = append;
+exports.drop = drop;
+exports.tail = tail;
+exports.copy = copy;
+exports.map = map;
+exports.reduce = reduce;
+exports.replace = replace;
+exports.remove = remove;
+exports.removeAll = removeAll;
+exports.findIndex = findIndex;
+exports.isArrayLike = isArrayLike;
+exports.id = id;
+exports.compose = compose;
+exports.apply = apply;
+exports.curry2 = curry2;
+exports.curry3 = curry3;
+exports.curry4 = curry4;
 
-  // id :: a -> a
-  var id = function id(x) {
-    return x;
-  };
+Object.defineProperty(exports, '__esModule', { value: true });
 
-  // compose :: (b -> c) -> (a -> b) -> (a -> c)
-  var compose = function compose(f, g) {
-    return function (x) {
-      return f(g(x));
-    };
-  };
+})));
 
-  // apply :: (a -> b) -> a -> b
-  var apply = function apply(f, x) {
-    return f(x);
-  };
-
-  // curry2 :: ((a, b) -> c) -> (a -> b -> c)
-  function curry2(f) {
-    function curried(a, b) {
-      switch (arguments.length) {
-        case 0:
-          return curried;
-        case 1:
-          return function (b) {
-            return f(a, b);
-          };
-        default:
-          return f(a, b);
-      }
-    }
-    return curried;
-  }
-
-  // curry3 :: ((a, b, c) -> d) -> (a -> b -> c -> d)
-  function curry3(f) {
-    function curried(a, b, c) {
-      // eslint-disable-line complexity
-      switch (arguments.length) {
-        case 0:
-          return curried;
-        case 1:
-          return curry2(function (b, c) {
-            return f(a, b, c);
-          });
-        case 2:
-          return function (c) {
-            return f(a, b, c);
-          };
-        default:
-          return f(a, b, c);
-      }
-    }
-    return curried;
-  }
-
-  exports.cons = cons;
-  exports.append = append;
-  exports.drop = drop;
-  exports.tail = tail;
-  exports.copy = copy;
-  exports.map = map;
-  exports.reduce = reduce;
-  exports.replace = replace;
-  exports.remove = remove;
-  exports.removeAll = removeAll;
-  exports.findIndex = findIndex;
-  exports.isArrayLike = isArrayLike;
-  exports.id = id;
-  exports.compose = compose;
-  exports.apply = apply;
-  exports.curry2 = curry2;
-  exports.curry3 = curry3;
-});
 
 },{}],4:[function(require,module,exports){
 /** @license MIT License (c) copyright 2010-2016 original author or authors */
@@ -5563,14 +5446,103 @@ Stream.prototype.multicast = function() {
 
 },{"./lib/Stream":7,"./lib/combinator/accumulate":8,"./lib/combinator/applicative":9,"./lib/combinator/build":10,"./lib/combinator/combine":11,"./lib/combinator/concatMap":12,"./lib/combinator/continueWith":13,"./lib/combinator/delay":14,"./lib/combinator/errors":15,"./lib/combinator/filter":16,"./lib/combinator/flatMap":17,"./lib/combinator/limit":18,"./lib/combinator/loop":19,"./lib/combinator/merge":20,"./lib/combinator/mergeConcurrently":21,"./lib/combinator/observe":22,"./lib/combinator/promises":23,"./lib/combinator/sample":24,"./lib/combinator/slice":25,"./lib/combinator/switch":26,"./lib/combinator/thru":27,"./lib/combinator/timeslice":28,"./lib/combinator/timestamp":29,"./lib/combinator/transduce":30,"./lib/combinator/transform":31,"./lib/combinator/zip":32,"./lib/observable/subscribe":45,"./lib/source/core":58,"./lib/source/create":59,"./lib/source/from":60,"./lib/source/fromEvent":62,"./lib/source/generate":64,"./lib/source/iterate":65,"./lib/source/periodic":66,"./lib/source/unfold":68,"@most/multicast":2,"@most/prelude":3,"symbol-observable":78}],70:[function(require,module,exports){
 // shim for using process in browser
-
 var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
 var queue = [];
 var draining = false;
 var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -5586,7 +5558,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = setTimeout(cleanUpNextTick);
+    var timeout = runTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -5603,7 +5575,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    clearTimeout(timeout);
+    runClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -5615,7 +5587,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
+        runTimeout(drainQueue);
     }
 };
 
@@ -5643,6 +5615,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -6390,7 +6366,7 @@ var _jsonp2 = _interopRequireDefault(_jsonp);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var url = 'http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
+var url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
 
 var search = document.getElementById('search');
 var resultList = document.getElementById('results');
@@ -6402,20 +6378,19 @@ var getResults = function getResults(text) {
   return (0, _jsonp2.default)(url + text).entity();
 };
 
-// Debounce keystrokes and get input value when it changes
-// Only search if the user stopped typing for 500ms, and if the
-// text is longer than 1 character and is different than the last
-// time we saw the text.
-var searchText = (0, _domEvent.input)(search).debounce(500).map(function (e) {
+// Get input value when it changes
+var searchText = (0, _domEvent.input)(search).map(function (e) {
   return e.target.value.trim();
-}).filter(function (text) {
-  return text.length > 1;
 }).skipRepeats();
 
 // Get results from wikipedia API and render
+// Only search if the user stopped typing for 500ms
+// and is different than the last time we saw the text
 // Ignore empty results, extract the actual list of results
 // from the wikipedia payload, then render the results
-searchText.map(getResults).map(_most.fromPromise).switch().filter(function (response) {
+searchText.filter(function (text) {
+  return text.length >= 1;
+}).debounce(500).map(getResults).map(_most.fromPromise).switch().filter(function (response) {
   return response.length > 1;
 }).map(function (response) {
   return response[1];
@@ -6423,6 +6398,13 @@ searchText.map(getResults).map(_most.fromPromise).switch().filter(function (resp
   resultList.innerHTML = results.reduce(function (html, item) {
     return html + template.replace(/\{name\}/g, item);
   }, '');
+});
+
+// Empty the results list if there is no search term
+searchText.filter(function (text) {
+  return text.length < 1;
+}).observe(function (_) {
+  return resultList.innerHTML = "";
 });
 
 },{"@most/dom-event":1,"most":69,"rest/client/jsonp":73}]},{},[80]);

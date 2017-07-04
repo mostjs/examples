@@ -12,20 +12,18 @@ const template = document.getElementById('template').innerHTML
 // Returns a promise for the wikipedia json response
 const getResults = text => rest(url + text).entity()
 
-// Debounce keystrokes and get input value when it changes
-// Only search if the user stopped typing for 500ms, and if the
-// text is longer than 1 character and is different than the last
-// time we saw the text.
-const searchText = input(search)
-  .debounce(500)
-  .map(e => e.target.value.trim())
-  .filter(text => text.length > 1)
-  .skipRepeats()
+// Get input value when it changes
+const searchText = input(search).map(e => e.target.value.trim()).skipRepeats()
 
 // Get results from wikipedia API and render
+// Only search if the user stopped typing for 500ms
+// and is different than the last time we saw the text
 // Ignore empty results, extract the actual list of results
 // from the wikipedia payload, then render the results
-searchText.map(getResults)
+searchText
+  .filter(text => text.length >= 1)
+  .debounce(500)
+  .map(getResults)
   .map(fromPromise)
   .switch()
   .filter(response => response.length > 1)
@@ -34,3 +32,8 @@ searchText.map(getResults)
     resultList.innerHTML = results.reduce((html, item) =>
       html + template.replace(/\{name\}/g, item), '')
   })
+
+// Empty the results list if there is no search term
+searchText
+  .filter(text => text.length < 1)
+  .observe(_ => resultList.innerHTML = "")
