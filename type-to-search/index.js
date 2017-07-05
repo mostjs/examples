@@ -2,7 +2,7 @@ import { input } from '@most/dom-event'
 import { map, filter, debounce, skipRepeats, switchLatest, fromPromise } from 'most'
 import rest from 'rest/client/jsonp'
 
-  const url = 'http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search='
+  const url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search='
 
   const search = document.getElementById('search')
   const resultList = document.getElementById('results')

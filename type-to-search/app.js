@@ -6390,7 +6390,7 @@ var _jsonp2 = _interopRequireDefault(_jsonp);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var url = 'http://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
+var url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
 
 var search = document.getElementById('search');
 var resultList = document.getElementById('results');
