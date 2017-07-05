@@ -6379,7 +6379,7 @@ var getResults = function getResults(text) {
 };
 
 // Get input value when it changes
-// Multicast the stream as it has more than one observer
+// Multicast the stream as it has more than one consumer
 var searchText = (0, _domEvent.input)(search).map(function (e) {
   return e.target.value.trim();
 }).skipRepeats().multicast();
