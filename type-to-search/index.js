@@ -13,6 +13,7 @@ const template = document.getElementById('template').innerHTML
 const getResults = text => rest(url + text).entity()
 
 // Get input value when it changes
+// Multicast the stream as it has more than one observer
 const searchText = input(search)
   .map(e => e.target.value.trim())
   .skipRepeats()
