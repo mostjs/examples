@@ -24,7 +24,7 @@ const searchText = input(search)
 // Ignore empty results, extract the actual list of results
 // from the wikipedia payload, then render the results
 searchText
-  .filter(text => text.length >= 1)
+  .filter(text => text.length > 1)
   .debounce(500)
   .map(getResults)
   .map(fromPromise)

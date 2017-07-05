@@ -6389,7 +6389,7 @@ var searchText = (0, _domEvent.input)(search).map(function (e) {
 // Ignore empty results, extract the actual list of results
 // from the wikipedia payload, then render the results
 searchText.filter(function (text) {
-  return text.length >= 1;
+  return text.length > 1;
 }).debounce(500).map(getResults).map(_most.fromPromise).switch().filter(function (response) {
   return response.length > 1;
 }).map(function (response) {
