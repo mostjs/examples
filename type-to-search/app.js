@@ -6382,7 +6382,7 @@ var getResults = function getResults(text) {
 // Multicast the stream as it has more than one consumer
 var searchText = (0, _domEvent.input)(search).map(function (e) {
   return e.target.value.trim();
-}).skipRepeats().multicast();
+}).skipRepeats();
 
 // Get results from wikipedia API and render
 // Only search if the user stopped typing for 500ms
