@@ -1,5 +1,5 @@
 import { input } from '@most/dom-event'
-import { map, filter, debounce, skipRepeats, switchLatest, fromPromise } from 'most'
+import { map, filter, debounce, skipRepeats, switchLatest, fromPromise, merge } from 'most'
 import rest from 'rest/client/jsonp'
 
 const url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search='
@@ -22,22 +22,26 @@ const searchText = input(search)
 // Get results from wikipedia API and render
 // Only search if the user stopped typing for 500ms
 // and is different than the last time we saw the text
-// Ignore empty results, extract the actual list of results
-// from the wikipedia payload, then render the results
-searchText
+// Ignore empty results, extract and return the actual
+// list of results from the wikipedia payload
+const results = searchText
   .filter(text => text.length > 1)
   .debounce(500)
   .map(getResults)
   .map(fromPromise)
   .switch()
-  .filter(response => response.length > 1)
-  .map(response => response[1])
-  .observe(results => {
-    resultList.innerHTML = results.reduce((html, item) =>
-      html + template.replace(/\{name\}/g, item), '')
-  })
+  .filter(results => results.length > 1)
+  .map(results => results[1])
 
-// Empty the results list if there is no search term
-searchText
+// Empty results list if there is no search term
+const emptyResults = searchText
   .filter(text => text.length < 1)
-  .observe(_ => resultList.innerHTML = "")
+  .constant([])
+
+// Render the results
+merge(results, emptyResults)
+  .observe(resultContent => {
+    resultList.innerHTML = resultContent.reduce(
+      (html, item) => html + template.replace(/\{name\}/g, item), ''
+    )
+  })

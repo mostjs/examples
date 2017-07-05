@@ -6387,25 +6387,26 @@ var searchText = (0, _domEvent.input)(search).map(function (e) {
 // Get results from wikipedia API and render
 // Only search if the user stopped typing for 500ms
 // and is different than the last time we saw the text
-// Ignore empty results, extract the actual list of results
-// from the wikipedia payload, then render the results
-searchText.filter(function (text) {
+// Ignore empty results, extract and return the actual
+// list of results from the wikipedia payload
+var results = searchText.filter(function (text) {
   return text.length > 1;
-}).debounce(500).map(getResults).map(_most.fromPromise).switch().filter(function (response) {
-  return response.length > 1;
-}).map(function (response) {
-  return response[1];
-}).observe(function (results) {
-  resultList.innerHTML = results.reduce(function (html, item) {
-    return html + template.replace(/\{name\}/g, item);
-  }, '');
+}).debounce(500).map(getResults).map(_most.fromPromise).switch().filter(function (results) {
+  return results.length > 1;
+}).map(function (results) {
+  return results[1];
 });
 
-// Empty the results list if there is no search term
-searchText.filter(function (text) {
+// Empty results list if there is no search term
+var emptyResults = searchText.filter(function (text) {
   return text.length < 1;
-}).observe(function (_) {
-  return resultList.innerHTML = "";
+}).constant([]);
+
+// Render the results
+(0, _most.merge)(results, emptyResults).observe(function (resultContent) {
+  resultList.innerHTML = resultContent.reduce(function (html, item) {
+    return html + template.replace(/\{name\}/g, item);
+  }, '');
 });
 
 },{"@most/dom-event":1,"most":69,"rest/client/jsonp":73}]},{},[80]);
