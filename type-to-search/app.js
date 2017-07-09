@@ -6379,9 +6379,10 @@ var getResults = function getResults(text) {
 };
 
 // Get input value when it changes
+// Multicast the stream as it's later being merged by an observer
 var searchText = (0, _domEvent.input)(search).map(function (e) {
   return e.target.value.trim();
-}).skipRepeats();
+}).skipRepeats().multicast();
 
 // Get results from wikipedia API and render
 // Only search if the user stopped typing for 500ms

@@ -13,9 +13,11 @@ const template = document.getElementById('template').innerHTML
 const getResults = text => rest(url + text).entity()
 
 // Get input value when it changes
+// Multicast the stream as it's later being merged by an observer
 const searchText = input(search)
   .map(e => e.target.value.trim())
   .skipRepeats()
+  .multicast()
 
 // Get results from wikipedia API and render
 // Only search if the user stopped typing for 500ms
