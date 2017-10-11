@@ -15,7 +15,7 @@ const renderResult = result => { resultNode.textContent = result }
 // x represents the current value of xInput
 const x = input(xInput).map(toNumber).startWith(0)
 
-// x represents the current value of yInput
+// y represents the current value of yInput
 const y = input(yInput).map(toNumber).startWith(0)
 
 // result is the live current value of adding x and y
