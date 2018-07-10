@@ -6,7 +6,8 @@
 //
 // This demo implements drag and drop using behavior switching.
 //
-import { just, merge } from 'most'
+import { map, merge, now, runEffects, switchLatest, startWith, tap } from '@most/core'
+import { newDefaultScheduler } from '@most/scheduler'
 import { mousedown, mousemove, mouseup } from '@most/dom-event'
 
 const DROP = 0
@@ -22,14 +23,11 @@ const draggable = document.querySelector('.draggable')
 // A mousedown DOM event generates a stream event which is
 // a stream of 1 GRAB followed by DRAGs (ie mousemoves).
 const makeDraggable = (area, draggable) => {
-  const drag = mousedown(draggable)
-    .tap(preventDefault) // On Firefox, avoid the dragging to select text
-    .map(beginDrag(area, draggable))
+  const drag = map(beginDrag(area, draggable), tap(preventDefault, mousedown(draggable)))
 
   // A mouseup DOM event generates a stream event which is a
   // stream containing a DROP.
-  const drop = mouseup(area)
-    .map(endDrag(draggable))
+  const drop = map(endDrag(draggable), mouseup(area))
 
   // Merge the drag and drop streams.
   // Then use switch() to ensure that the resulting stream behaves
@@ -38,7 +36,7 @@ const makeDraggable = (area, draggable) => {
   // producing events again.
   // This effectively *toggles behavior* between dragging behavior and
   // dropped behavior.
-  return merge(drag, drop).switch()
+  return switchLatest(merge(drag, drop))
 }
 
 const preventDefault = e => e.preventDefault()
@@ -50,13 +48,13 @@ const beginDrag = (area, draggable) => e => {
     dy: e.clientY - draggable.offsetTop
   }
 
-  return mousemove(area)
-    .map(e => eventToDragInfo(DRAG, draggable, e, dragOffset))
-    .startWith(eventToDragInfo(GRAB, draggable, e))
+  return startWith(eventToDragInfo(GRAB, draggable, e),
+    map(e => eventToDragInfo(DRAG, draggable, e, dragOffset),
+    mousemove(area)))
 }
 
 const endDrag = draggable => e =>
-  just(eventToDragInfo(DROP, draggable, e))
+  now(eventToDragInfo(DROP, draggable, e))
 
 // dragOffset is undefined and unused for actions other than DRAG.
 const eventToDragInfo = (action, target, e, dragOffset) =>
@@ -80,5 +78,4 @@ const handleDrag = dragInfo => {
   els.top = (dragInfo.y - dragInfo.offset.dy) + 'px'
 }
 
-makeDraggable(area, draggable)
-  .observe(handleDrag)
+runEffects(tap(handleDrag, makeDraggable(area, draggable)), newDefaultScheduler())
