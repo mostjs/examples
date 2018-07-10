@@ -38,8 +38,10 @@
     "jsinspect": "^0.8.0"
   },
   "dependencies": {
-    "@most/dom-event": "^1.1.0",
-    "most": "^0.19.7",
+    "@most/core": "^1.3.0",
+    "@most/dom-event": "^2.0.0",
+    "@most/scheduler": "^1.2.0",
+    "@most/types": "^1.0.0",
     "rest": "^2.0.0"
   }
 }
