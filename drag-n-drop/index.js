@@ -50,7 +50,7 @@ const beginDrag = (area, draggable) => e => {
 
   return startWith(eventToDragInfo(GRAB, draggable, e),
     map(e => eventToDragInfo(DRAG, draggable, e, dragOffset),
-    mousemove(area)))
+      mousemove(area)))
 }
 
 const endDrag = draggable => e =>

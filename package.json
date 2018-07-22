@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "description": "examples",
   "scripts": {
-    "build:add-inputs": "browserify add-inputs/index.js -t babelify --outfile add-inputs/app.js",
-    "build:drag-n-drop": "browserify drag-n-drop/index.js -t babelify --outfile drag-n-drop/app.js",
-    "build:mouse-position": "browserify mouse-position/index.js -t babelify --outfile mouse-position/app.js",
-    "build:type-to-search": "browserify type-to-search/index.js -t babelify --outfile type-to-search/app.js",
-    "lint": "jsinspect . && eslint ."
+    "build:add-inputs": "rollup -c -i add-inputs/index.js -o add-inputs/app.js",
+    "build:drag-n-drop": "rollup -c -i drag-n-drop/index.js -o drag-n-drop/app.js",
+    "build:mouse-position": "rollup -c -i mouse-position/index.js -o mouse-position/app.js",
+    "build:type-to-search": "rollup -c -i type-to-search/index.js -o type-to-search/app.js",
+    "lint": "standard **/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,20 +22,14 @@
   "homepage": "https://github.com/mostjs/examples#readme",
   "devDependencies": {
     "@most/eslint-config-most": "^1.0.2",
-    "assert": "^1.3.0",
-    "babel-cli": "^6.7.5",
-    "babel-core": "^6.7.5",
-    "babel-eslint": "^6.0.2",
-    "babel-plugin-transform-es2015-modules-umd": "^6.5.0",
-    "babel-preset-es2015": "^6.5.0",
-    "babelify": "^7.2.0",
-    "browserify": "^13.0.0",
-    "eslint": "^2.2.0",
-    "eslint-config-standard": "^5.1.0",
-    "eslint-plugin-promise": "^1.1.0",
-    "eslint-plugin-standard": "^1.3.2",
-    "isparta": "^4.0.0",
-    "jsinspect": "^0.8.0"
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.6",
+    "babel-plugin-transform-pipeline-operator": "^7.0.0-beta.3",
+    "babel-preset-env": "^1.7.0",
+    "rollup": "^0.63.4",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "standard": "^11.0.1"
   },
   "dependencies": {
     "@most/core": "^1.3.0",
@@ -43,5 +37,8 @@
     "@most/scheduler": "^1.2.0",
     "@most/types": "^1.0.0",
     "rest": "^2.0.0"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }

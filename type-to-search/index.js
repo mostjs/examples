@@ -1,4 +1,4 @@
-import { map, multicast, swithcLatest, constant, runEffects, filter, debounce, skipRepeats, switchLatest, fromPromise, merge, tap } from '@most/core'
+import { map, multicast, constant, runEffects, filter, debounce, skipRepeats, switchLatest, fromPromise, merge, tap } from '@most/core'
 import { newDefaultScheduler } from '@most/scheduler'
 import { input } from '@most/dom-event'
 import rest from 'rest/client/jsonp'
