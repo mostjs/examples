@@ -6960,6 +6960,9 @@
     return jsonp(url + text).entity();
   }; // Get input value when it changes
   // Multicast the stream as it's later being merged by an observer
+  // @most/core's API is curried, and works great with the pipeline operator |>
+  // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Pipeline_operator
+  // for more info about the pipeline operator
 
 
   var searchText = (_ref = (_ref2 = (_input = input(search), map$1(function (e) {
