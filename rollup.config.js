@@ -1,13 +1,15 @@
 import nodeResolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
+import commonjs from 'rollup-plugin-commonjs'
 
 export default {
   plugins: [
     nodeResolve(),
     babel({
-      presets: [['env', { modules: false }]],
-      plugins: ['transform-pipeline-operator']
-    })
+      presets: [['@babel/env', { modules: false }]],
+      plugins: [['@babel/proposal-pipeline-operator', { proposal: 'minimal' }]]
+    }),
+    commonjs()
   ],
   output: {
     format: 'iife',

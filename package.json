@@ -21,13 +21,15 @@
   },
   "homepage": "https://github.com/mostjs/examples#readme",
   "devDependencies": {
-    "@most/eslint-config-most": "^1.0.2",
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.0.0-beta.54",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-pipeline-operator": "^7.0.0-beta.3",
-    "babel-preset-env": "^1.7.0",
     "rollup": "^0.63.4",
-    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-babel": "^4.0.0-beta.7",
+    "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
     "standard": "^11.0.1"
   },
@@ -36,6 +38,7 @@
     "@most/dom-event": "^2.0.0",
     "@most/scheduler": "^1.2.0",
     "@most/types": "^1.0.0",
+    "most-product": "^1.1.0",
     "rest": "^2.0.0"
   },
   "standard": {
